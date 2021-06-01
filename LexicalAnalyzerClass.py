@@ -1,3 +1,4 @@
+from os import stat
 import string
 import csv
 
@@ -32,7 +33,7 @@ class LexicalAnalyzer:
         idx_char = 0
         state = 'q1'
         current_token = ''
-        while state != 'accept' and idx_char < len(self.sentence):
+        while state != 'accept' and state != 'error':
             current_char = self.input_string[idx_char]
             current_token += current_char
             state = self.transition_table[(state, current_char)]

@@ -33,48 +33,32 @@ class Parser:
         # reading
         idx_token = 0
         symbol = self.tokens[idx_token]
-        try:
-            while(len(stack) > 0):
-                top = stack[len(stack)-1]
-                if self.debug:
-                    print('[TOP]', top)
-                    print('[SYMBOL]', symbol)
-                if top in self.terminals:
-                    if self.debug:
-                        print('[FOUND] Terminal')
-                    if top == symbol:
-                        stack.pop()
-                        idx_token += 1
-                        symbol = self.tokens[idx_token]
-                        if symbol == 'EOS':
-                            if self.debug:
-                                print('[ISI]', stack)
-                            stack.pop()
-                    else:
-                        if self.debug:
-                            print('[ERROR]')
-                        break
-                elif top in self.non_terminals:
-                    if self.debug:
-                        print('[FOUND] Non terminal')
-                    if self.parse_table[(top, symbol)][0] != 'error':
-                        stack.pop()
-                        symbol_to_be_pushed = self.parse_table[(top, symbol)]
-                        for i in range(len(symbol_to_be_pushed)-1, -1, -1):
-                            stack.append(symbol_to_be_pushed[i])
-                    else:
-                        if self.debug:
-                            print('[ERROR]')
-                        break
-                else:
-                    if self.debug:
-                        print('[ERROR]')
-                    break
-                if self.debug:
-                    print('[STACK]', stack)
-        except:
+        while(len(stack) > 0 and symbol in self.terminals):
+            top = stack[len(stack)-1]
             if self.debug:
-                print(['ERROR'])
+                print('[TOP]', top)
+                print('[SYMBOL]', symbol)
+            if top in self.terminals and top == symbol:
+                if self.debug:
+                    print('[FOUND] Terminal')
+                stack.pop()
+                idx_token += 1
+                symbol = self.tokens[idx_token]
+                if symbol == 'EOS':
+                    if self.debug:
+                        print('[ISI]', stack)
+                    stack.pop()
+            elif top in self.non_terminals and self.parse_table[(top, symbol)][0] != 'error':
+                if self.debug:
+                    print('[FOUND] Non terminal')
+                stack.pop()
+                symbol_to_be_pushed = self.parse_table[(top, symbol)]
+                for i in range(len(symbol_to_be_pushed)-1, -1, -1):
+                    stack.append(symbol_to_be_pushed[i])
+            else:
+                break
+            if self.debug:
+                print('[STACK]', stack)
         # Conclusion
         if symbol == 'EOS' and len(stack) == 0:
             print('[ACCEPT]', self.sentence, 'sesuai grammar')
