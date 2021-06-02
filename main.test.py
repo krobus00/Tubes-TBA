@@ -129,6 +129,19 @@ class TestTubes(unittest.TestCase):
                     self.assertIn('[VALID]', l.reading(), 'Lexical salah')
                     self.assertIn('[ACCEPT]', p.reading(), 'Parser salah')
 
+    def test_invalid_words(self):
+        s = ['michael', 'yogi', 'akbar']
+        v = ['read', 'write', 'speak']
+        o = ['rock', 'laptop', 'router', 'keyboard']
+        for i in s:
+            for j in v:
+                for k in o:
+                    config = self.config('{} {} {}'.format(i, j, k))
+                    l = LexicalAnalyzer(config)
+                    p = Parser(config)
+                    self.assertIn('[INVALID]', l.reading(), 'Lexical salah')
+                    self.assertIn('[ERROR]', p.reading(), 'Parser salah')
+
 
 if __name__ == '__main__':
     unittest.main()
