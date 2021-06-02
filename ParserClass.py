@@ -61,6 +61,6 @@ class Parser:
                 print('[STACK]', stack)
         # Conclusion
         if symbol == 'EOS' and len(stack) == 0:
-            print('[ACCEPT]', self.sentence, 'sesuai grammar')
+            return '[ACCEPT] {} sesuai grammar'.format(self.sentence)
         else:
-            print('[ERROR]', self.sentence, 'tidak sesuai grammar')
+            return '[ERROR] {} tidak sesuai grammar'.format(self.sentence)

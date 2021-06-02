@@ -49,6 +49,6 @@ class LexicalAnalyzer:
                 break
             idx_char += 1
         if state == 'accept':
-            print("[VALID]", self.sentence)
+            return "[VALID] {}".format(self.sentence)
         else:
-            print("[INVALID]", self.sentence)
+            return "[INVALID] {}".format(self.sentence)
