@@ -13,13 +13,17 @@ class LexicalAnalyzer:
         self.state_list = []
         self.transition_table = {}
         self.update_transition_table = {}
+        self.finish_state = ''
         with open(self.lexical_transition_file) as file:
             reader = csv.reader(file, delimiter=';')
             for val in reader:
                 if val[0] not in self.state_list:
                     self.state_list.append(val[0])
                 action = val[1].split(' ')
+                if self.finish_state == '' and action[1] == 'accept':
+                    self.finish_state = val[0]
                 action[0] = action[0].replace('spasi', ' ')
+
                 self.update_transition_table[(val[0], action[0])] = action[1]
         for state in self.state_list:
             for aplhabet in self.alphabet_list:
@@ -37,7 +41,7 @@ class LexicalAnalyzer:
             current_char = self.input_string[idx_char]
             current_token += current_char
             state = self.transition_table[(state, current_char)]
-            if (state == 'q9' or state == 'q19' or state == 'q34') and self.debug:
+            if (state == self.finish_state) and self.debug:
                 print('[VALID] current token :', current_token)
                 current_token = ''
             if state == 'error' and self.debug:
