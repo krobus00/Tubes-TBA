@@ -10,5 +10,5 @@ if __name__ == '__main__':
     }
     l = LexicalAnalyzer(config)
     p = Parser(config)
-    l.reading()
-    p.reading()
+    print(l.reading())
+    print(p.reading())
