@@ -15,4 +15,4 @@
 
 ## Finite Automata
 
-![Finite Automata](https://github.com/krobus00/Tubes-TBA/blob/images/fa.jpg?raw=true)
+![Finite Automata](https://github.com/krobus00/Tubes-TBA/blob/master/images/fa.jpg?raw=true)
